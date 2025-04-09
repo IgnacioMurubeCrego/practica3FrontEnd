@@ -1,5 +1,5 @@
 import { FunctionalComponent } from "preact/src/index.js";
-import Card from "./Card.tsx"; // Import the Card component
+import Card from "./Card.tsx";
 
 type AuthorProps = {
   name: string;
@@ -17,7 +17,6 @@ const Author: FunctionalComponent<AuthorProps> = ({ name, bio, books }) => {
       <h1 class="author-name">{name}</h1>
       {bio && <p class="author-bio">{bio}</p>}
 
-      {/* Author's books grid with a 3-column layout */}
       <div class="author-books-grid">
         {books.slice(0, 6).map((book) => {
           const bookInfo = {
@@ -28,7 +27,7 @@ const Author: FunctionalComponent<AuthorProps> = ({ name, bio, books }) => {
           };
           return (
             <Card
-              key={book.key} // Ensure each card has a unique key
+              key={book.key}
               book={bookInfo}
             />
           );
