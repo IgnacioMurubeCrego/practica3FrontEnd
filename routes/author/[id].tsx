@@ -53,7 +53,7 @@ export const handler = async (
       works: books,
     };
 
-    return ctx.render(authorDetails); // Pasar los detalles al componente
+    return ctx.render(authorDetails); 
   } catch (e) {
     console.error("Error fetching author or works:", e);
     return ctx.render();
