@@ -25,6 +25,16 @@ export const handler = async (
       `https://openlibrary.org/works/${bookId}.json`,
     );
     const data = response.data;
+    const authorId = data.authors && data.authors[0]
+      ? data.authors[0].author.key.replace("/authors/", "")
+      : "";
+
+    const authorData = await Axios.get(
+      `https://openlibrary.org/works/${authorId}.json`,
+    );
+
+    const author_name = authorData.data.name;
+
     const bookDetails: BookDetails = {
       title: data.title,
       description: data.description ? data.description : "No disponible",
@@ -33,12 +43,8 @@ export const handler = async (
       number_of_pages: data.number_of_pages || null,
       cover_i: data.covers[0],
       author: {
-        name: data.authors && data.authors[0]
-          ? data.authors[0].name
-          : "Desconocido",
-        id: data.authors && data.authors[0]
-          ? data.authors[0].author.key.replace("/authors/", "")
-          : "",
+        name: authorData ? author_name : "Desconocido",
+        id: authorId,
       },
     };
 
@@ -49,9 +55,7 @@ export const handler = async (
 };
 
 const BookPage = ({ data }: PageProps<BookDetails>) => {
-  const book = data;
-
-  if (!book) {
+  if (!data) {
     return <p>No se encontró el libro.</p>;
   }
 

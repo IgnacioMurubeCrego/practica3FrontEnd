@@ -28,6 +28,8 @@ export const handler = async (
       `https://openlibrary.org/authors/${authorId}.json`,
     );
     const authorData = authorResponse.data;
+    const name = authorData.name;
+    const bio = authorData.bio ? authorData.bio.value : "No disponible";
 
     // Obtener los trabajos del autor
     const worksResponse = await Axios.get(
@@ -35,29 +37,34 @@ export const handler = async (
     );
     const worksData = worksResponse.data;
 
+    if (!Array.isArray(worksData.entries)) {
+      throw new Error("La propiedad 'entries' no está disponible en worksData");
+    }
+
     // Filtrar los primeros 6 libros disponibles
-    const books = worksData.entries.slice(0, 6).map((work: Work) => ({
-      title: work.title,
-      key: work.key.replace("/works/", ""),
-      cover_i: work.covers[0],
-    }));
+    const books = worksData.entries.slice(0, 6).map((work: Work) => (
+      {
+        title: work.title,
+        key: work.key.replace("/works/", ""),
+        cover_i: work.covers?.[0] ?? null,
+      }
+    ));
 
     // Organizar la información del autor y los libros
     const authorDetails: AuthorDetails = {
-      name: authorData.name,
-      bio: authorData.bio ? authorData.bio.value : "No disponible",
+      name,
+      bio,
       works: books,
     };
 
     return ctx.render(authorDetails); // Pasar los detalles al componente
-  } catch (_e) {
-    return ctx.render(); // Si ocurre un error, no devolver datos
+  } catch (e) {
+    console.error("Error fetching author or works:", e);
+    return ctx.render();
   }
 };
 
 const AuthorPage = (props: PageProps<AuthorDetails>) => {
-  console.log(props.data);
-
   const data = props.data;
 
   if (!data) {
