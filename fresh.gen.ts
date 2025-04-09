@@ -5,6 +5,8 @@
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_layout from "./routes/_layout.tsx";
+import * as $author_author_ from "./routes/author/[author].tsx";
+import * as $book_id_ from "./routes/book/[id].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $search_index from "./routes/search/index.tsx";
 
@@ -15,6 +17,8 @@ const manifest = {
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
     "./routes/_layout.tsx": $_layout,
+    "./routes/author/[author].tsx": $author_author_,
+    "./routes/book/[id].tsx": $book_id_,
     "./routes/index.tsx": $index,
     "./routes/search/index.tsx": $search_index,
   },
