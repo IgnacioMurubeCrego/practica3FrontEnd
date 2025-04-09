@@ -23,7 +23,6 @@ export const handler = async (
 ) => {
   const authorId = ctx.params.id;
   try {
-    // Obtener detalles del autor
     const authorResponse = await Axios.get(
       `https://openlibrary.org/authors/${authorId}.json`,
     );
@@ -31,7 +30,6 @@ export const handler = async (
     const name = authorData.name;
     const bio = authorData.bio ? authorData.bio.value : "No disponible";
 
-    // Obtener los trabajos del autor
     const worksResponse = await Axios.get(
       `https://openlibrary.org/authors/${authorId}/works.json`,
     );
@@ -41,7 +39,6 @@ export const handler = async (
       throw new Error("La propiedad 'entries' no está disponible en worksData");
     }
 
-    // Filtrar los primeros 6 libros disponibles
     const books = worksData.entries.slice(0, 6).map((work: Work) => (
       {
         title: work.title,
@@ -50,7 +47,6 @@ export const handler = async (
       }
     ));
 
-    // Organizar la información del autor y los libros
     const authorDetails: AuthorDetails = {
       name,
       bio,
