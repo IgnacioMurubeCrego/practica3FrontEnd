@@ -1,9 +1,9 @@
 html, body {
   margin: 0;
   padding: 0;
-  width: 100vw; /* Asegura que el ancho sea el del viewport */
+  width: 100vw; 
   max-width: 100vw;
-  overflow-x: hidden; /* Impide el scroll horizontal */
+  overflow-x: hidden; 
 }
 
 /* Cabecera tipo grid '_layout.tsx' */
