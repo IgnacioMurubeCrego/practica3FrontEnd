@@ -1,7 +1,7 @@
 import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
 import Card from "../components/Card.tsx";
 import { openLibraryAPI } from "../types.ts";
-import Axios from "axios";
+import Axios from "https://esm.sh/axios@1.8.1";
 
 const featuredBooks: string[] = [
   "To Kill a Mockingbird",
@@ -21,31 +21,47 @@ const featuredBooks: string[] = [
   "Harry Potter and the Sorcerer's Stone",
 ];
 
-type Data = {
-  key: string;
-  cover_i: string;
+type Book = {
+  id: string;
+  cover_i?: number;
   title: string;
-  author_name: string;
+  author: string;
 };
 
-// Title URL : https://openlibrary.org/search.json?q={titulo}
-// Covers URL : https://covers.openlibrary.org/b/id/{cover_i}-L.jpg
+export const handler: Handlers<Book[]> = {
+  async GET(_req: Request, ctx: FreshContext) {
+    const results: Book[] = [];
 
-export const handler: Handlers = {
-  async GET(_req: Request, ctx: FreshContext<unknown, Data>) {
-    const title = featuredBooks[0];
-    const titleURL = `https://openlibrary.org/search.json?q=${title}`;
-    const response = await Axios<openLibraryAPI[]>(titleURL);
-    const data = response.data.slice(0, 12);
-    return ctx.render({ data });
+    for (const title of featuredBooks) {
+      const res = await Axios.get(
+        `https://openlibrary.org/search.json?q=${encodeURIComponent(title)}`,
+      );
+      const book = res.data.docs[0]; // Tomamos el primero relevante
+
+      if (book) {
+        results.push({
+          id: book.key.replace("/works/", ""),
+          cover_i: book.cover_i,
+          title: book.title,
+          author: book.author_name ? book.author_name[0] : "Unknown Author",
+        });
+      }
+    }
+
+    return ctx.render(results);
   },
 };
 
-const Page = (props: PageProps<Data>) => {
-  const data = props.data;
+const Page = (props: PageProps<Book[]>) => {
+  const books = props.data;
+
   return (
-    <div>
-      <Card props={data} />
+    <div class="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      {books.map((book) => (
+        <Card
+          book={book}
+        />
+      ))}
     </div>
   );
 };
