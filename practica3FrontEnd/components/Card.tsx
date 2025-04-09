@@ -15,14 +15,12 @@ const Card: FunctionalComponent<Props> = ({ book }) => {
     : "https://via.placeholder.com/150x220?text=No+Cover";
 
   return (
-    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <img src={coverUrl} alt={book.title} class="w-full h-80 object-cover" />
-      <div class="p-4">
-        <b class="block text-lg">{book.title}</b>
-        <span class="text-gray-700 block mb-2">{book.author}</span>
-        <a href={`/book/${book.id}`} class="text-blue-500 hover:underline">
-          Details
-        </a>
+    <div class="book-card">
+      <img src={coverUrl} alt={book.title} class="book-card-image" />
+      <div class="book-card-content">
+        <h3 class="book-card-title">{book.title}</h3>
+        <p class="book-card-author">{book.author}</p>
+        <a href={`/book/${book.id}`} class="book-card-link">Ver detalles →</a>
       </div>
     </div>
   );

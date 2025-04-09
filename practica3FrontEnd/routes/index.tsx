@@ -1,6 +1,5 @@
 import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
 import Card from "../components/Card.tsx";
-import { openLibraryAPI } from "../types.ts";
 import Axios from "https://esm.sh/axios@1.8.1";
 
 const featuredBooks: string[] = [
@@ -56,7 +55,7 @@ const Page = (props: PageProps<Book[]>) => {
   const books = props.data;
 
   return (
-    <div class="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="books-grid">
       {books.map((book) => (
         <Card
           book={book}
