@@ -3,7 +3,9 @@ import type { FunctionalComponent } from "preact";
 const Header: FunctionalComponent = () => {
   return (
     <header class="header">
-      <div class="header-title">Home</div>
+      <a href="/" class="home-button">
+        Home
+      </a>
       <form action="/search" method="GET" class="header-form">
         <input
           type="text"
