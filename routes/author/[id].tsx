@@ -68,7 +68,7 @@ const AuthorPage = (props: PageProps<AuthorDetails>) => {
   const data = props.data;
 
   if (!data) {
-    return <p>No se encontró el autor.</p>;
+    return <p>Author not found.</p>;
   }
 
   return (

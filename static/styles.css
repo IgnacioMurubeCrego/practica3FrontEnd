@@ -23,7 +23,7 @@ html, body {
 
 /* Estilo para header principal 'components/Header.tsx'*/
 .header {
-  background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045);
+  background-color: #6C1413;
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -102,6 +102,15 @@ html, body {
 
 .book-card a:hover {
   text-decoration: underline;
+}
+
+/*Contenedor de Busqueda '/seach'*/
+.searchContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 2rem 0;
 }
 
 /* Detalles del libro '/book/[id].tsx'*/

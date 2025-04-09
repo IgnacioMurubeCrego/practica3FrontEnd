@@ -6,6 +6,9 @@ const Header: FunctionalComponent = () => {
       <a href="/" class="header-title">
         Home
       </a>
+      <a href="/search" class="header-title">
+        Search Books
+      </a>
       <b class="header-title">
         Open Library Website
       </b>

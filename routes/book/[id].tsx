@@ -37,13 +37,15 @@ export const handler = async (
 
     const bookDetails: BookDetails = {
       title: data.title,
-      description: data.description ? data.description : "No disponible",
+      description: data.description
+        ? data.description
+        : "Description not available",
       first_publish_date: data.first_publish_date ||
         new Date(data.created?.value).getFullYear().toString(),
       number_of_pages: data.number_of_pages || null,
       cover_i: data.covers[0],
       author: {
-        name: authorData ? author_name : "Desconocido",
+        name: authorData ? author_name : "Unknown",
         id: authorId,
       },
     };
@@ -56,7 +58,7 @@ export const handler = async (
 
 const BookPage = ({ data }: PageProps<BookDetails>) => {
   if (!data) {
-    return <p>No se encontró el libro.</p>;
+    return <p>Book not found.</p>;
   }
 
   return (
